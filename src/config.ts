@@ -19,9 +19,9 @@ export type ConfigType = {
 
 export const config: ConfigType = {
   videoPath: `src/videos/in/shorts`,
-  outputPath: "src/videos/out/shorts",
+  outputPath: "src/videos/out/shorts/",
   processingPath: "src/videos/processing/",
-  filterPath: "src/videos/filters/template.psd",
+  filterPath: "src/videos/filters/",
   processingPattern: "processing_%04d.png",
   sequenceDuration: 15,
   timeAfterKillVideo: 3,

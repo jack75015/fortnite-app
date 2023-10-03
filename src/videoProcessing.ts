@@ -2,6 +2,7 @@ import { logger } from "./logger";
 import * as fs from "fs-extra";
 import ffmpeg from "fluent-ffmpeg";
 import { ConfigType } from "./config";
+import { exportShortVideo } from "./filterProcessing";
 
 export const proccessVideoToImages = async (
   videoPath: string,
@@ -28,75 +29,6 @@ export const proccessVideoToImages = async (
   });
 
   await process;
-};
-
-export const exportShortVideo = async (
-  eliminationIndex: number,
-  index: string,
-  videoPath: string,
-  config: ConfigType
-) => {
-  const output_temp = `${config.processingPath}elimination_${index}.mp4`;
-  const output_temp2 = `${config.processingPath}_elimination_${index}.mp4`;
-
-  const output = `${config.outputPath}elimination_${index}.mp4`;
-
-  const generateVideo = new Promise<void>((resolve, reject) => {
-    ffmpeg()
-      .input(videoPath)
-      .seekInput(
-        eliminationIndex - config.sequenceDuration + config.timeAfterKillVideo
-      )
-      .duration(config.sequenceDuration)
-      .outputOptions(["-vf", "scale=-1:1440,crop=1080:1440"])
-      .output(output_temp)
-      .on("end", () => {
-        resolve();
-      })
-      .on("error", (err) => {
-        logger.error(`Error ${err}`);
-        return reject(new Error(err));
-      })
-      .run();
-  });
-  await generateVideo;
-
-  const generateVideoWithFilterButSadlyNoSound = new Promise<void>(
-    (resolve, reject) => {
-      ffmpeg()
-        .input(output_temp)
-        .input(config.filterPath)
-        .complexFilter("[0:v][1:v]overlay=W-w-10:H-h-10[v]")
-        .map("[v]")
-        .output(output_temp2)
-        .on("end", () => {
-          resolve();
-        })
-        .on("error", (err) => {
-          logger.error(`Error ${err}`);
-          return reject(new Error(err));
-        })
-        .run();
-    }
-  );
-  await generateVideoWithFilterButSadlyNoSound;
-
-  const generateVideoFinal = new Promise<void>((resolve, reject) => {
-    ffmpeg()
-      .input(output_temp2)
-      .input(output_temp)
-      .output(output)
-      .outputOptions(["-map 0:v", "-map 1:a", "-c:v copy", "-shortest"])
-      .on("end", () => {
-        resolve();
-      })
-      .on("error", (err) => {
-        logger.error(`Error ${err}`);
-        return reject(new Error(err));
-      })
-      .run();
-  });
-  await generateVideoFinal;
 };
 
 export const exportShortVideos = async (

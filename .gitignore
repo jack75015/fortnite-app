@@ -1,2 +1,6 @@
 /build
 /node_modules
+.DS_Store
+/src/videos/in
+/src/videos/out
+/src/videos/processing
