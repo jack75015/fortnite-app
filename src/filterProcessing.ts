@@ -26,7 +26,10 @@ export const exportShortVideo = async (
         eliminationIndex - config.sequenceDuration + config.timeAfterKillVideo
       )
       .duration(config.sequenceDuration)
-      .outputOptions(["-vf", "scale=-1:1440,crop=1080:1440"])
+      .outputOptions([
+        "-vf",
+        `scale=-1:${config.shortFormatHeight},crop=${config.shortFormatWidth}:${config.shortFormatHeight}`,
+      ])
       .output(output_temp)
       .on("end", () => {
         resolve();

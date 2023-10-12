@@ -15,6 +15,8 @@ export type ConfigType = {
   timeAfterKillVideo: number;
   batchSize: number;
   coordinates_kills: CoordinatesKillsType;
+  shortFormatHeight: number;
+  shortFormatWidth: number;
 };
 
 export const config: ConfigType = {
@@ -32,4 +34,6 @@ export const config: ConfigType = {
     width: 21,
     height: 35,
   },
+  shortFormatHeight: 1920,
+  shortFormatWidth: 1080,
 };
