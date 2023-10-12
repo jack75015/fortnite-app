@@ -15,7 +15,7 @@ export const exportShortVideo = async (
   const output_temp4 = `${config.processingPath}___elimination_${index}.mp4`;
   const output = `${config.outputPath}elimination_${index}.mp4`;
 
-  const filter_begin = `${config.filterPath}subscribe.gif`;
+  const filter_begin = `${config.filterPath}subscribe2.gif`;
   const filter_end = `${config.filterPath}like2.gif`;
   const filter_constant = `${config.filterPath}name.psd`;
 
@@ -44,7 +44,7 @@ export const exportShortVideo = async (
       .input(output_temp)
       .input(filter_constant)
       // .complexFilter("[0:v][1:v]overlay=W-w-10:H-h-10[v]")
-      .input(filter_end) // Ajoutez votre troisième input ici
+      .input(filter_end)
       .complexFilter(
         "[0:v][1:v]overlay=W-w-10:H-h-10[overlay1];[overlay1][2:v]overlay=W-w-50:H-h-310[v]"
       )
