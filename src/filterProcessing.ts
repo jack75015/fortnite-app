@@ -3,6 +3,8 @@ import ffmpeg from "fluent-ffmpeg";
 import { ConfigType } from "./config";
 import { exec } from "child_process";
 
+// TO REFACTO
+
 export const exportShortVideo = async (
   eliminationIndex: number,
   index: string,

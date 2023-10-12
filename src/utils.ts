@@ -49,9 +49,5 @@ export const smoothValue = (index: number, results: string[]) => {
     }
   }
 
-  if (count > 0) {
-    return (sum / count).toString();
-  } else {
-    return "A";
-  }
+  return count > 0 ? (sum / count).toString() : "A";
 };

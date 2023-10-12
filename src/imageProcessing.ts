@@ -34,48 +34,38 @@ export const extractTextFromImage = async (
   return text;
 };
 
-export const processImagesInBatches = async (
-  imagePaths: any,
-  batchSize: any,
+const processImageBatch = async (
+  batch: string[],
   processingPath: string,
   coordinates_kills: any
-) => {
-  const results = [];
-  let batch = [];
+): Promise<string[]> => {
+  const batchPromises = batch.map(async (imagePath) => {
+    const croppedImage = await cropToEliminationCounter(
+      processingPath + imagePath,
+      coordinates_kills
+    );
+    const extractionResult = await extractTextFromImage(croppedImage);
+    return extractionResult;
+  });
 
-  for (const imagePath of imagePaths) {
-    batch.push(imagePath);
+  return Promise.all(batchPromises);
+};
 
-    if (batch.length === batchSize) {
-      const batchPromises = batch.map(async (imagePath) => {
-        const croppedImage = await cropToEliminationCounter(
-          processingPath + imagePath,
-          coordinates_kills
-        );
-        const extractionResult = await extractTextFromImage(croppedImage);
-        return extractionResult;
-      });
-
-      const batchResults = await Promise.all(batchPromises);
-      results.push(...batchResults);
-
-      batch = [];
-    }
-  }
-
-  if (batch.length > 0) {
-    const batchPromises = batch.map(async (imagePath) => {
-      const croppedImage = await cropToEliminationCounter(
-        processingPath + imagePath,
-        coordinates_kills
-      );
-      const extractionResult = await extractTextFromImage(croppedImage);
-      return extractionResult;
-    });
-
-    const batchResults = await Promise.all(batchPromises);
+export const processImagesInBatches = async (
+  imagePaths: string[],
+  batchSize: number,
+  processingPath: string,
+  coordinates_kills: any
+): Promise<string[]> => {
+  const results: string[] = [];
+  for (let i = 0; i < imagePaths.length; i += batchSize) {
+    const batch = imagePaths.slice(i, i + batchSize);
+    const batchResults = await processImageBatch(
+      batch,
+      processingPath,
+      coordinates_kills
+    );
     results.push(...batchResults);
   }
-
   return results;
 };
