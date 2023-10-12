@@ -22,8 +22,8 @@ To get started with this project, follow these steps:
 **Clone the repository:**
 
 ```shell
-git clone <repository-url>
-cd serveur-nodejs
+git clone git@github.com:jack75015/fortnite-app.git
+cd fortnite-app
 ```
 
 **Install Node.js and npm:**
