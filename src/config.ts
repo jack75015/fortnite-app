@@ -5,11 +5,18 @@ export type CoordinatesKillsType = {
   height: number;
 };
 
+export type FilterType = {
+  filterPath: string;
+  timeStart?: number;
+  timeEnd?: number;
+  positionWidth: number;
+  positionHeight: number;
+};
+
 export type ConfigType = {
   videoPath: string;
   outputPath: string;
   processingPath: string;
-  filterPath: string;
   processingPattern: string;
   sequenceDuration: number;
   timeAfterKillVideo: number;
@@ -17,13 +24,13 @@ export type ConfigType = {
   coordinates_kills: CoordinatesKillsType;
   shortFormatHeight: number;
   shortFormatWidth: number;
+  filterConfigs: FilterType[];
 };
 
 export const config: ConfigType = {
   videoPath: `src/videos/in/shorts`,
   outputPath: "src/videos/out/shorts/",
   processingPath: "src/videos/processing/",
-  filterPath: "src/videos/filters/",
   processingPattern: "processing_%04d.png",
   sequenceDuration: 15,
   timeAfterKillVideo: 3,
@@ -36,4 +43,23 @@ export const config: ConfigType = {
   },
   shortFormatHeight: 1920,
   shortFormatWidth: 1080,
+  filterConfigs: [
+    {
+      filterPath: `src/videos/filters/like2.gif`,
+      positionWidth: 50,
+      positionHeight: 310,
+    },
+    {
+      filterPath: `src/videos/filters/name.psd`,
+      positionWidth: 10,
+      positionHeight: 10,
+    },
+    {
+      filterPath: `src/videos/filters/subscribe2.gif`,
+      timeStart: 0,
+      timeEnd: 4,
+      positionWidth: 640,
+      positionHeight: 40,
+    },
+  ],
 };

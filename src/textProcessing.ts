@@ -19,12 +19,6 @@ export const processDataImages = (imagesProcessed: string[]): string[] => {
       results.push(image);
     }
   }
-  const goodResult = results.filter((x) => x !== "A").length;
-  logger.info(
-    `Image processed success rate: ${Number.parseFloat(
-      ((goodResult / imagesProcessed.length) * 100).toFixed(2)
-    )} `
-  );
   return results;
 };
 
