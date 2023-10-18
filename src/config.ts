@@ -45,7 +45,7 @@ export const config: ConfigType = {
   shortFormatWidth: 1080,
   filterConfigs: [
     {
-      filterPath: `src/videos/filters/like2.gif`,
+      filterPath: `src/videos/filters/like.gif`,
       positionWidth: 50,
       positionHeight: 310,
     },
@@ -55,7 +55,7 @@ export const config: ConfigType = {
       positionHeight: 10,
     },
     {
-      filterPath: `src/videos/filters/subscribe2.gif`,
+      filterPath: `src/videos/filters/subscribe.gif`,
       timeStart: 0,
       timeEnd: 4,
       positionWidth: 640,
