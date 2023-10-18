@@ -1,7 +1,6 @@
 import { logger } from "./logger";
 import ffmpeg from "fluent-ffmpeg";
 import { ConfigType, FilterType } from "./config";
-import { exec } from "child_process";
 import { v4 as uuidv4 } from "uuid";
 
 export const exportShortVideo = async (
@@ -12,7 +11,7 @@ export const exportShortVideo = async (
 ) => {
   const output_temp = `${config.processingPath}elimination_${index}.mp4`;
   const output_temp4 = `${config.processingPath}___elimination_${index}.mp4`;
-  const output = `${config.outputPath}elimination_${index}.mp4`;
+  const output = `${config.outputPath}${uuidv4()}.mp4`;
 
   const generateVideo = new Promise<void>((resolve, reject) => {
     ffmpeg()
